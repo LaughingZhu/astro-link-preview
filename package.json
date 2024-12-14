@@ -37,10 +37,10 @@
   ],
   "author": "nemurubaka",
   "license": "MIT",
-  "homepage": "https://github.com/cijiugechu/astro-link-preview",
+  "homepage": "https://github.com/LaughingZhu/astro-link-preview",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/cijiugechu/astro-link-preview.git"
+    "url": "https://github.com/LaughingZhu/astro-link-preview.git"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
@@ -58,7 +58,7 @@
     "playwright": "^1.40.0"
   },
   "peerDependencies": {
-    "astro": ">=2.0.0"
+    "astro": ">=4.0.0"
   },
   "main": "index.js"
 }
