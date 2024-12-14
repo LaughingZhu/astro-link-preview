@@ -1,0 +1,64 @@
+{
+  "name": "astro-link-preview",
+  "version": "1.0.0",
+  "description": "This Astro integration generates preview images for external links.",
+  "private": false,
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./route": "./dist/route.mjs"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:debug": "tsup --config tsup.debug.ts",
+    "build": "tsup --config tsup.config.ts",
+    "install-playwright-deps": "playwright install chromium",
+    "postinstall": "npx playwright install chromium",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "astro-component",
+    "preview",
+    "link",
+    "integration"
+  ],
+  "author": "nemurubaka",
+  "license": "MIT",
+  "homepage": "https://github.com/cijiugechu/astro-link-preview",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cijiugechu/astro-link-preview.git"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "astro": "^5.0.5",
+    "tsup": "^7.3.0",
+    "typescript": "^5.1.6",
+    "vite": "^6.0.3"
+  },
+  "dependencies": {
+    "@napi-rs/image": "^1.7.0",
+    "@node-rs/xxhash": "^1.4.2",
+    "@rollup/pluginutils": "^5.0.5",
+    "kleur": "^4.1.4",
+    "parse5-html-rewriting-stream": "^7.0.0",
+    "playwright": "^1.40.0"
+  },
+  "peerDependencies": {
+    "astro": ">=2.0.0"
+  },
+  "main": "index.js"
+}
