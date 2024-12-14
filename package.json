@@ -1,10 +1,10 @@
 {
-  "name": "astro-link-preview",
-  "version": "1.0.0",
+  "name": "@laughingzhu/astro-link-preview",
+  "version": "0.0.1",
   "description": "This Astro integration generates preview images for external links.",
-  "private": false,
   "type": "module",
   "types": "./dist/index.d.ts",
+  "access": "public",
   "exports": {
     ".": {
       "import": {
@@ -35,12 +35,12 @@
     "link",
     "integration"
   ],
-  "author": "nemurubaka",
+  "author": "LaughingZhu",
   "license": "MIT",
   "homepage": "https://github.com/LaughingZhu/astro-link-preview",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LaughingZhu/astro-link-preview.git"
+    "url": "git+https://github.com/LaughingZhu/astro-link-preview.git"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
@@ -60,5 +60,8 @@
   "peerDependencies": {
     "astro": ">=4.0.0"
   },
-  "main": "index.js"
+  "main": "index.js",
+  "bugs": {
+    "url": "https://github.com/LaughingZhu/astro-link-preview/issues"
+  }
 }
