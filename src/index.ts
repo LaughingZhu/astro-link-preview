@@ -165,7 +165,7 @@ const integration = (options: Options = {}): AstroIntegration => {
         if (isSSR) {
           injectRoute({
             pattern: '/_astro-link-preview/[dynamic]',
-            entrypoint: 'astro-link-preview/route',
+            entrypoint: '@laughingzhu/astro-link-preview/route',
           })
         }
       },
