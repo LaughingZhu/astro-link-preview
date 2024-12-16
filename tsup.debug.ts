@@ -14,5 +14,4 @@ export default defineConfig({
     }
   },
   publicDir: 'inject',
-  external: ['virtual:link-preview-config'],
 })

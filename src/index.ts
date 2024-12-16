@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { xxh32 } from '@node-rs/xxhash'
 import type { Options } from './types.js'
 import { createLogger } from './logger.js'
-import { GenerateService } from './generate.js'
+import { initService } from './generate.js'
 import { optimize } from './optimize.js'
 import { vitePlugin } from './vite-plugin-link-preview.js'
 import { context } from './context.js'
@@ -190,21 +190,35 @@ const integration = (options: Options = {}): AstroIntegration => {
         const paths = hrefs.map(fileURLToPath)
 
         await Promise.all(
-          paths.map(path => parseAndWrite(path, linkAndHashCache))
+          paths.map(path => {
+            try {
+              parseAndWrite(path, linkAndHashCache)
+            } catch (error) {
+              logger.error(
+                `Crashed while trying to parse the HTML of ${path}\n${error.message}`
+              )
+            }
+          })
         )
 
-        const generator = await GenerateService()
+        const generator = await initService()
 
         const arr = [...linkAndHashCache]
 
         await Promise.all(
           arr.map(async ([href, hashed]) => {
-            const imageBuf = await generator.generate(href).then(optimize)
-            const imageData = imageBuf instanceof Buffer ? new Uint8Array(imageBuf.buffer) : imageBuf;
-            await writeFile(
-              new URL(`./${hashed}.${previewImageFormat}`, dir),
-              imageData
-            )
+            try {
+              const imageBuf = await generator.generate(href).then(optimize)
+              const imageData = imageBuf instanceof Buffer ? new Uint8Array(imageBuf.buffer) : imageBuf;
+              await writeFile(
+                new URL(`./${hashed}.${previewImageFormat}`, dir),
+                imageData
+              )
+            } catch (e) {
+              logger.error(
+                `Crashed while trying to generate the screenshot of ${href}\n${e.message}`
+              )
+            }
           })
         )
 

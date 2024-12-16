@@ -45,4 +45,10 @@ const GenerateService = async () => {
   }
 }
 
-export { GenerateService }
+// 将 GenerateService 封装在一个异步函数中
+const initService = async () => {
+  const service = await GenerateService()
+  return service
+}
+
+export { initService }

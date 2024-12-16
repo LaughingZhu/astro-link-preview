@@ -1,14 +1,17 @@
 {
   "name": "@laughingzhu/astro-link-preview",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "description": "This Astro integration generates preview images for external links.",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.mjs"
-    }
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./route": "./dist/route.mjs"
   },
   "engines": {
     "node": ">=16.0.0"

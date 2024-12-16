@@ -1,8 +1,8 @@
 import type { Plugin } from 'vite'
-import { GenerateService } from './generate'
+import { initService } from './generate'
 
 const vitePlugin = (): Plugin => {
-  let generator: Awaited<ReturnType<typeof GenerateService>>
+  let generator: Awaited<ReturnType<typeof initService>>
 
   return {
     name: 'vite-plugin-link-preview',
@@ -10,7 +10,7 @@ const vitePlugin = (): Plugin => {
     apply: 'serve',
 
     async buildStart() {
-      generator = await GenerateService()
+      generator = await initService()
     },
 
     configureServer(server) {
