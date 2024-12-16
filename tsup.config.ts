@@ -12,5 +12,6 @@ export default defineConfig({
       js: '.mjs',
     }
   },
+  // external: ['virtual:link-preview-config'],
   publicDir: 'inject',
 })
