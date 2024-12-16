@@ -25,7 +25,8 @@ const injectedScript = await readFile(injectedScriptPath, { encoding: 'utf-8' })
 const parseAndWrite = async (
   pathHref: string,
   cache: Map<string, number>,
-  logger: ReturnType<typeof createLogger>
+  logger: ReturnType<typeof createLogger>,
+  linkPreviewClass?: string,
 ) => {
   try {
     const rawHtmlStr = await readFile(pathHref, { encoding: 'utf-8' })
@@ -37,21 +38,23 @@ const parseAndWrite = async (
 
     rewriterStream.on('startTag', startTag => {
       if (startTag.tagName === 'a') {
-        const href = startTag.attrs.find(attr => attr.name === 'href')?.value
-
-        if (href && typeof href === 'string' && isValidURL(href)) {
-          if (cache.has(href)) {
-            startTag.attrs.push({
-              name: 'data-link-preview',
-              value: `${cache.get(href)}`,
-            })
-          } else {
-            const hashed = xxh32(href)
-            cache.set(href, hashed)
-            startTag.attrs.push({
-              name: 'data-link-preview',
-              value: `${hashed}`,
-            })
+        const classAttr = startTag.attrs.find(attr => attr.name === 'class')?.value
+        if(!!linkPreviewClass && classAttr && classAttr.includes(linkPreviewClass)) {
+          const href = startTag.attrs.find(attr => attr.name === 'href')?.value
+          if (href && typeof href === 'string' && isValidURL(href)) {
+            if (cache.has(href)) {
+              startTag.attrs.push({
+                name: 'data-link-preview',
+                value: `${cache.get(href)}`,
+              })
+            } else {
+              const hashed = xxh32(href)
+              cache.set(href, hashed)
+              startTag.attrs.push({
+                name: 'data-link-preview',
+                value: `${hashed}`,
+              })
+            }
           }
         }
       }
@@ -134,6 +137,7 @@ const integration = (options: Options = {}): AstroIntegration => {
     proxy,
     previewImageFormat = 'jpg',
     enableOnMobile = false,
+    linkPreviewClass
   } = options
 
   if (!['jpg', 'png'].includes(previewImageFormat)) {
@@ -227,7 +231,7 @@ const integration = (options: Options = {}): AstroIntegration => {
         await Promise.all(
           paths.map(async path => {
             try {
-              await parseAndWrite(path, linkAndHashCache, logger)
+              await parseAndWrite(path, linkAndHashCache, logger, linkPreviewClass)
             } catch (e) {
               logger.error(
                 `Crashed while trying to parse the HTML of ${path}\n${

@@ -19,5 +19,10 @@ export interface Options {
    * whether to allow image previews on mobile devices
    * @default false
    */
-  enableOnMobile?: boolean
+  enableOnMobile?: boolean,
+    /**
+   * class name for link that needs to be previewed
+   * @default 'link-preview'
+   */
+  linkPreviewClass?: string;
 }
