@@ -25,7 +25,7 @@ const vitePlugin = (options: Options): Plugin => {
       server.middlewares.use((req, res, next) => {
         const url = req.url;
 
-        if (url.startsWith('/_astro-link-preview')) {
+        if (url.startsWith('/_link-preview')) {
           if (urlCache.has(url)) {
             res.statusCode = 503;
             res.end();
@@ -33,7 +33,7 @@ const vitePlugin = (options: Options): Plugin => {
           }
 
           urlCache.add(url);
-          const rawHref = atob(url.replace('/_astro-link-preview/', ''));
+          const rawHref = atob(url.replace('/_link-preview/', ''));
 
           generator
             .generate(rawHref)

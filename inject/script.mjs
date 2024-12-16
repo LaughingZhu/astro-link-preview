@@ -125,7 +125,7 @@ links.forEach(item => {
     document.body.appendChild(previewElement)
 
     if (isSsrOrDev) {
-      fetch(`/_astro-link-preview/${window.btoa(href)}`)
+      fetch(`/_link_preview/${window.btoa(href)}`)
         .then(r => {
           if (r.ok) {
             return r.blob()
